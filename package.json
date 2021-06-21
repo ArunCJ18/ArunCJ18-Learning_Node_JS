@@ -1,0 +1,27 @@
+{
+  "name": "learning_node_js",
+  "version": "1.0.0",
+  "description": "Node_JS_Notes",
+  "main": "Express_server.js",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon Express_server.js",
+    "user_server": "nodemon Creating_user_server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArunCJ18/ArunCJ18-Learning_Node_JS.git"
+  },
+  "author": "Arunkumaran J",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ArunCJ18/ArunCJ18-Learning_Node_JS/issues"
+  },
+  "homepage": "https://github.com/ArunCJ18/ArunCJ18-Learning_Node_JS#readme"
+}
