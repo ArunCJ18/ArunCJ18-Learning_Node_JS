@@ -1,6 +1,8 @@
 const express = require("express");
+const body_parser = require("body-parser"); 
 
 const app = express();
+app.use(body_parser.urlencoded({extended:false})); //package used for the parse the req body
 
 /* app.use((req, res, next)=>{
     console.log("I am a middleware!")
@@ -34,8 +36,13 @@ app.use("/products", (req, res, next) => {
     res.send("<h1>You're at Products Page</h1>");
 });
 
+app.post("/product",(req, res, next)=>{ //only parse the body of the incomming post request
+    console.log(req.body);
+    res.redirect("/products");
+})
+
 app.use("/", (req, res, next) => {
-    res.send("<form action = '/products' method = 'POST' ><input type = 'text' name = 'search'><button type = 'submit'>Search</button></form>");
+    res.send("<form action = '/product' method = 'POST' ><input type = 'text' name = 'search'><button type = 'submit'>Search</button></form>");
 });
 
 
