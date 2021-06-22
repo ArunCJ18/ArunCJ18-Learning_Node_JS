@@ -1,7 +1,10 @@
 const express = require("express");
 const body_parser = require("body-parser"); 
-
 const app = express();
+//const adminRoutes = require('./routes/admin.js');
+//const shopRoutes = require("./routes/shop.js");
+
+
 app.use(body_parser.urlencoded({extended:false})); //package used for the parse the req body
 
 /* app.use((req, res, next)=>{
@@ -29,21 +32,24 @@ app.use("/Page2", (req, res, next) => {  //we're declaring /page2 first bcoz "/"
 
 app.use("/", (req, res, next) => {
     console.log("Its Firmware 0.1");
-    res.send("<h1>You're at page 1</h1>"); //Express js automatically add HTML properties to this
+    res.send("<h1>You're at page 1</h1>"); 
 });   */
 
-app.use("/products", (req, res, next) => {
+ app.use("/products", (req, res, next) => {
     res.send("<h1>You're at Products Page</h1>");
 });
 
 app.post("/product",(req, res, next)=>{ //only parse the body of the incomming post request
     console.log(req.body);
     res.redirect("/products");
-})
+}) 
 
 app.use("/", (req, res, next) => {
     res.send("<form action = '/product' method = 'POST' ><input type = 'text' name = 'search'><button type = 'submit'>Search</button></form>");
-});
+}); 
+
+
+
 
 
 
