@@ -1,3 +1,4 @@
+const rootDir = require("../util/path.js")
 const path = require("path");
 
 const express = require("express");
@@ -16,7 +17,7 @@ router.post("/add-product", (req, res, next) => { //only parse the body of the i
 
 //admin/add-product => GET
 router.get("/add-product", (req, res, next) => {
-    res.sendFile(path.join(__dirname, "../", "views", "add-products.html"))
+    res.sendFile(path.join(rootDir, "views", "add-products.html"))
 });
 
 
