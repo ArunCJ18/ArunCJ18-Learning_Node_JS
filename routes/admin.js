@@ -1,3 +1,5 @@
+const path = require("path");
+
 const express = require("express");
 
 const router = express.Router();
@@ -6,17 +8,16 @@ const body_parser = require("body-parser");
 
 router.use(body_parser.urlencoded({extended:false}))
 
-router.get("/", (req, res, next) => {
-    res.send("<form action = '/product' method = 'POST' ><input type = 'text' name = 'search'><button type = 'submit'>Search</button></form>");
-});
-
-router.post("/product", (req, res, next) => { //only parse the body of the incomming post request
+//admin/add-product => POST
+router.post("/add-product", (req, res, next) => { //only parse the body of the incomming post request
     console.log(req.body);
-    res.redirect("/products");
+    res.redirect("/");
 });
 
-
-
+//admin/add-product => GET
+router.get("/add-product", (req, res, next) => {
+    res.sendFile(path.join(__dirname, "../", "views", "add-products.html"))
+});
 
 
 module.exports = router;
