@@ -5,20 +5,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Products</title>
-</head>
-<body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href = "/">Shop</a></li>
-                <li><a href = "/admin/add-product">Add Products</a></li>
-            </ul>
-        </nav>
-    </header>
+    <link rel="stylesheet" href="/css/product.css">
+    </head>   
+    <body>
+        <header class="main-header">
+            <nav class="main-header__nav">
+                <ul class="main-header__item-list">
+                    <li class="main-header__item"><a href="/">Shop</a></li>
+                    <li class="main-header__item"><a href="/admin/add-product">Add Products</a></li>
+                </ul>
+            </nav>
+        </header>
     <main>
-        <form method = "POST" action = "/admin/add-product">
-            <input type = "text" name = "product">
-            <button type = "submit" name = "submit"> Submit </button>
+        <form class = "product-form" method = "POST" action = "/admin/add-product">
+           <div class = "form-control">
+               <label for = "title">Title</label>
+                <input type="text" name="product" id = "title">
+            </div>
+           <button type = "submit" name = "submit"> Submit </button>
         </form>
     </main>
     
