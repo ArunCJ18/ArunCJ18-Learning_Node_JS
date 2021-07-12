@@ -1,14 +1,11 @@
-const rootDir = require("../util/path.js")
-const path = require("path");
-const products =[];
-
+// const rootDir = require("../util/path.js")
+// const path = require("path");
+ 
 const express = require("express");
 
 const router = express.Router();
 
-const body_parser = require("body-parser");
-
-router.use(body_parser.urlencoded({extended:false}))
+const productsController = require("../controllers/products");
 
 // //admin/add-product => POST
 // router.post("/add-product", (req, res, next) => { //only parse the body of the incomming post request
@@ -21,18 +18,22 @@ router.use(body_parser.urlencoded({extended:false}))
 //     res.sendFile(path.join(rootDir, "views", "add-products.html"))
 // });
 
-router.post("/add-product",(req, res, next)=>{
-    products.push({title: req.body.title});
-    res.redirect("/");
+// router.post("/add-product",(req, res, next)=>{
+//     products.push({title: req.body.title});
+//     res.redirect("/");
     
-});
+// });
+// //using templating engine to render the views 
+// router.get("/add-product",(req, res, next)=>{
+//     res.render("add-products",{
+//         pageTitle: "add-products",
+//         path:"/add-product"
+//     });
+// });
 
-router.get("/add-product",(req, res, next)=>{
-    res.render("add-products",{
-        pageTitle: "add-products",
-        path:"/add-product"
-    });
-});
+router.post("/add-product",productsController.postAddProduct);
+router.get("/add-product",productsController.getAddProduct);
 
-exports.routes = router;
-exports.products = products;
+// exports.routes = router;
+// exports.products = products;
+module.exports = router;
