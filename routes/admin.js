@@ -5,7 +5,7 @@ const express = require("express");
 
 const router = express.Router();
 
-const productsController = require("../controllers/products");
+const adminController = require("../controllers/admin");
 
 // //admin/add-product => POST
 // router.post("/add-product", (req, res, next) => { //only parse the body of the incomming post request
@@ -31,8 +31,11 @@ const productsController = require("../controllers/products");
 //     });
 // });
 
-router.post("/add-product",productsController.postAddProduct);
-router.get("/add-product",productsController.getAddProduct);
+router.post("/add-product",adminController.postAddProduct);
+
+router.get("/products", adminController.getProducts);
+
+router.get("/add-product",adminController.getAddProduct);
 
 // exports.routes = router;
 // exports.products = products;

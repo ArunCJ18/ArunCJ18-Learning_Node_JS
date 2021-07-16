@@ -21,5 +21,5 @@ setTimeout(()=>{
 function add (a,b){
     return a+b
 }
-console.log(40+50);
+// console.log(40+50);
 // console.log(add(10,20))
