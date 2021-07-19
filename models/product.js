@@ -15,6 +15,7 @@ const getProductsFromFile = cb => {
 }
 module.exports = class Product {
     constructor(title, imageUrl, price, description) {
+        this.id = Math.random().toString();
         this.title = title;
         this.imageUrl = imageUrl;
         this.price = price;
@@ -33,6 +34,12 @@ module.exports = class Product {
 
     static fetchAll(cb) {
         getProductsFromFile(cb);
+    };
+    static getById(id,cb){
+        getProductsFromFile(products => {
+            const product=products.find(findId => findId.id === id);
+            cb(product);
+        });
     };
 }
 // const products = [];
