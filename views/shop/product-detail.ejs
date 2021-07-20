@@ -6,6 +6,7 @@
     <img src="<%= product.imageUrl %>" alt="ProductImage">
     <h2>$ <%= product.price %></h2>
     <p><b> <%= product.description %> </b></p>
+    <%- include("../includes/add-to-cart.ejs") %>
 </main>
 
 <%- include("../includes/end.ejs") %>

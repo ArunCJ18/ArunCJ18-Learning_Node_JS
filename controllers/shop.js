@@ -1,5 +1,6 @@
 //controllers which consists of functions 
 const Product = require("../models/product");
+const Cart = require("../models/cart.js");
 
 exports.getIndex = (req, res, next) => {
     Product.fetchAll(products => {
@@ -38,6 +39,14 @@ exports.getCart = (req, res, next) => {
         pageTitle: "My Cart",
         path: "/cart"
     });
+};
+
+exports.postCart = (req, res, next) => {
+    const prodId = req.body.productId;
+    Product.getById(prodId, product => {
+        Cart.addproduct(product.id,product.price);
+    });
+    res.redirect("/cart");
 };
 
 exports.getOrder = (req, res, next) => {
