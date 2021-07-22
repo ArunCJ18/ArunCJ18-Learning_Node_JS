@@ -21,8 +21,8 @@ const getProductsFromFile = cb => {
 //constructor recieve the title imagerl price description values in parameter
 
 module.exports = class Product {
-    constructor(title, imageUrl, price, description) {
-        this.id = Math.random().toString();
+    constructor(id, title, imageUrl, price, description) {
+        this.id = id;
         this.title = title;
         this.imageUrl = imageUrl;
         this.price = price;
@@ -34,13 +34,22 @@ module.exports = class Product {
 //products converts to a json string and write into the data file 
     save() {
         getProductsFromFile((products) => {
+            if(this.id){
+                const existingProductIndex = products.findIndex(findId => findId.id === this.id);
+                const updatedProducts = [...products];
+                updatedProducts[existingProductIndex] = this;
+                fs.writeFile(p, JSON.stringify(updatedProducts), (err) => {
+                    console.log(err);
+            });
+        }else{
+            this.id = Math.random().toString();
             products.push(this);
-            var product = JSON.stringify(products);
-            fs.writeFile(p, product, (err) => {
+                fs.writeFile(p, JSON.stringify(products), (err) => {
                 console.log(err);
             });
-        });
-    }
+        }
+    });
+}
 
 //fetch the values by using the getProductsFromFile function
     static fetchAll(cb) {

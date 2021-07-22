@@ -33,7 +33,11 @@ const adminController = require("../controllers/admin");
 
 router.post("/add-product",adminController.postAddProduct);
 
+router.post("/edit-product", adminController.postEditProducts);
+
 router.get("/products", adminController.getProducts);
+
+router.get("/edit-product/:productId", adminController.getEditProduct);
 
 router.get("/add-product",adminController.getAddProduct);
 
