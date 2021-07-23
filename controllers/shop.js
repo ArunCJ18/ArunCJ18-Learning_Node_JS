@@ -14,11 +14,11 @@ exports.getIndex = (req, res, next) => {
 
 exports.getProductId = (req, res, next) => {
     const prodId = req.params.productId;
-    Product.getById(prodId,products => {
-        res.render("shop/product-detail",{
-            pageTitle:"Product Details",
-            path:"/products",
-            product:products,
+    Product.getById(prodId, products => {
+        res.render("shop/product-detail", {
+            pageTitle: "Product Details",
+            path: "/products",
+            product: products,
         });
     });
 };
@@ -35,16 +35,30 @@ exports.getProducts = (req, res, next) => {
 };
 
 exports.getCart = (req, res, next) => {
-    res.render("shop/cart", {
-        pageTitle: "My Cart",
-        path: "/cart"
+    Cart.getCart(cart => {
+        Product.fetchAll(products => {
+            const cartProducts = [];
+            console.log(cart.totalPrice);
+            for (cartProduct of cart.products) {
+                const cartProductData = products.find(prod => prod.id === cartProduct.id);
+                if (cartProductData) {
+                    cartProducts.push({ productData: cartProductData, qty: cartProduct.qty });
+                }
+            }
+            res.render("shop/cart", {
+                pageTitle: "My Cart",
+                path: "/cart",
+                products: cartProducts,
+                totalPrice: cart.totalPrice
+            });
+        });
     });
 };
 
 exports.postCart = (req, res, next) => {
     const prodId = req.body.productId;
     Product.getById(prodId, product => {
-        Cart.addproduct(product.id,product.price);
+        Cart.addproduct(product.id, product.price);
     });
     res.redirect("/cart");
 };
@@ -60,5 +74,12 @@ exports.getCheckout = (req, res, next) => {
     res.render("shop/checkout", {
         pageTitle: "Checkout",
         path: "/checkout"
+    });
+};
+exports.postCartDeleteProduct = (req, res, next) => {
+    const prodId = req.body.prodId;
+    Product.getById(prodId,products => {
+    Cart.deleteProduct(prodId,products.price)
+    res.redirect("/cart")
     });
 };

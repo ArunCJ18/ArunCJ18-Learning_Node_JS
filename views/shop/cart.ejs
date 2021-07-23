@@ -1,3 +1,21 @@
 <%- include("../includes/head.ejs") %>
     <%- include("../includes/navigation.ejs") %>
+        <main>
+            <% if(products.length> 0) { %>
+                <% products.forEach(prod=> {%>
+                    <ul>
+                        <div><img src="<%= prod.productData.imageUrl %>" alt="productImage">
+                        <h4><%= prod.productData.title %> (<%= prod.qty %>)</h4>
+                        <form action="/cart-delete-item" method="POST">
+                            <input type="hidden" name="prodId" value='<%= prod.productData.id %>'>
+                        <button class="btn" type="submit">Delete</button>
+                    </form>
+                    </ul>
+                    <% }) %>
+                        <h1>Total Price = <%= totalPrice %>
+                        </h1>
+                        <% }else{ %>
+                            <h1>No Products found in Cart! </h1>
+                            <% } %>
+        </main>
         <%- include("../includes/end.ejs") %>
