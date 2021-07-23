@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require("path");
+const Cart = require("./cart");
 //creating a file inside data folder from the rootdirectory
 const p = path.join(path.dirname(process.mainModule.filename),
     "data",
@@ -48,6 +49,18 @@ module.exports = class Product {
                 console.log(err);
             });
         }
+    });
+}
+
+static delete(id){
+    getProductsFromFile(products => {
+        const product=products.find(findId => findId.id === id);
+        const updatedProducts = products.filter(prodId => prodId !== id);
+        fs.writeFile(p, JSON.stringify(updatedProducts), err => {
+            if(!err){
+                Cart.deleteProduct(id, product.price);
+            }
+        });
     });
 }
 

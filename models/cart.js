@@ -70,6 +70,23 @@ module.exports = class Cart{
             });
             
         }); 
-    }
+    };
+
+    static deleteProduct(id, productPrice){
+        fs.readFile(p, (err,fileContent) => {
+            if(err){
+                return;
+            }
+            const updatedCart = {...JSON.parse(fileContent)};
+            console.log(updatedCart.product)
+            const product = updatedCart.products.find(findId => findId.id === id);
+            const productQty = product.qty;
+            updatedCart.products = updatedCart.products.filter(prodId => prodId.id !== id);
+            updatedCart.totalPrice = updatedCart.totalPrice - productPrice * productQty;
+             fs.writeFile(p, JSON.stringify(updatedCart),err =>{
+                 console.log(err);
+             });
+        });
+    };
 }
 
