@@ -78,7 +78,7 @@ module.exports = class Cart{
                 return;
             }
             const updatedCart = {...JSON.parse(fileContent)};
-            console.log(updatedCart.product)
+            
             const product = updatedCart.products.find(findId => findId.id === id);
             const productQty = product.qty;
             updatedCart.products = updatedCart.products.filter(prodId => prodId.id !== id);

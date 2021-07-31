@@ -4,6 +4,7 @@ const express = require("express");
 const app = express();
 const errorController = require("./controllers/error");
 const body_parser = require("body-parser");
+const db = require("./util/database");
 
 app.use(body_parser.urlencoded({extended: false}));
 //templating engine ejs and i think views is the path where it has to search
@@ -12,6 +13,7 @@ app.set("views", "views")
 
 const shopRouter = require("./routes/shop.js")
 const adminRouter = require("./routes/admin.js")
+
 
 //always checks for file in this folder if a file that we asked is in this folder
 //exists it loads the file => this now used for the css in html
