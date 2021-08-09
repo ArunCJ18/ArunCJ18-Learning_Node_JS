@@ -3,45 +3,82 @@ const Product = require("../models/product");
 const Cart = require("../models/cart.js");
 
 exports.getIndex = (req, res, next) => {
-    Product.fetchAll()
-    .then(([rows, fields]) => {
+    Product.findAll()
+    .then(products => {
         res.render("shop/index", {
             pageTitle: "Index",
-            prods: rows,
+            prods: products,
             path: "/"
         });
     })
     .catch(err => {
         console.log(err);
-    })
+    });
+    //Manual SQL Code
+    // Product.fetchAll()
+    // .then(([rows, fields]) => {
+    //     res.render("shop/index", {
+    //         pageTitle: "Index",
+    //         prods: rows,
+    //         path: "/"
+    //     });
+    // })
+    // .catch(err => {
+    //     console.log(err);
+    // })
 };
 
 exports.getProductId = (req, res, next) => {
     const prodId = req.params.productId;
-    Product.getById(prodId).then(([products]) =>{
-        console.log(products);
+    Product.findByPk(prodId)
+    .then(products =>{
         res.render("shop/product-detail", {
             pageTitle: "Product Details",
             path: "/products",
-            product: products[0],
-        });
+            product: products
+    });
     })
-    .catch(err => console.log(err))
+    .catch(err => {
+        console.log(err);
+    })
+    //Manual SQL Code
+    // Product.getById(prodId)
+    // .then(([products]) =>{
+    //     console.log(products);
+    //     res.render("shop/product-detail", {
+    //         pageTitle: "Product Details",
+    //         path: "/products",
+    //         product: products[0],
+    //     });
+    // })
+    // .catch(err => console.log(err))
 };
 
 exports.getProducts = (req, res, next) => {
-    Product.fetchAll()
-        .then(([rows, fields]) => {
+    Product.findAll()
+        .then(products => {
             res.render("shop/product-list", {
                 pageTitle: "Products",
-                prods: rows,
-                path: "/"
+                prods: products,
+                path: "/products"
             });
         })
         .catch(err => {
             console.log(err);
-        })
-    };
+        });
+    //Manual SQL Code
+    // Product.fetchAll()
+    //     .then(([rows, fields]) => {
+    //         res.render("shop/product-list", {
+    //             pageTitle: "Products",
+    //             prods: rows,
+    //             path: "/"
+    //         });
+    //     })
+    //     .catch(err => {
+    //         console.log(err);
+    //     })
+     };
 
 exports.getCart = (req, res, next) => {
     res.render("shop/cart", {

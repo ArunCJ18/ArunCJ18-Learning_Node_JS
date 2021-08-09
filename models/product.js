@@ -1,35 +1,65 @@
-const db = require("../util/database");
+const Sequelize = require('sequelize');
 
-module.exports = class Product {
-    constructor(title, imageUrl, price, description) {
-        this.title = title;
-        this.imageUrl = imageUrl;
-        this.price = price;
-        this.description = description;
+const sequelize = require('../util/database');
+
+const Product = sequelize.define('product', {
+    id: {
+        type: Sequelize.INTEGER,
+        autoIncrement: true,
+        allowNull: false,
+        primaryKey: true
+    },
+    title: Sequelize.STRING,
+    price: {
+        type: Sequelize.DOUBLE,
+        allowNull: false
+    },
+    imageUrl: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    description: {
+        type: Sequelize.STRING,
+        allowNull: false
     }
-    save(){
-        return db.execute('INSERT INTO products (title, price, description, imageUrl) VALUES (?, ?, ?, ?)',
-        [this.title, this.price, this.description, this.imageUrl]);
+});
 
-    }
+module.exports = Product;
 
-    static delete(){
 
-    };
+//Manual SQL code
+// const db = require("../util/database");
 
-    static fetchAll(){
-        return db.execute("SELECT * FROM products")
-    };
+// module.exports = class Product {
+//     constructor(title, imageUrl, price, description) {
+//         this.title = title;
+//         this.imageUrl = imageUrl;
+//         this.price = price;
+//         this.description = description;
+//     }
+//     save(){
+//         return db.execute('INSERT INTO products (title, price, description, imageUrl) VALUES (?, ?, ?, ?)',
+//         [this.title, this.price, this.description, this.imageUrl]);
+
+//     }
+
+//     static delete(){
+
+//     };
+
+//     static fetchAll(){
+//         return db.execute("SELECT * FROM products")
+//     };
     
-    static getById(id){
-        return db.execute("SELECT * FROM products WHERE products.id = ?",[id]);
-    };
-}
+//     static getById(id){
+//         return db.execute("SELECT * FROM products WHERE products.id = ?",[id]);
+//     };
+// }
 
 
 
 
-
+//Without SQL using File
 // const fs = require('fs');
 // const path = require("path");
 // const Cart = require("./cart");

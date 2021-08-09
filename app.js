@@ -4,7 +4,9 @@ const express = require("express");
 const app = express();
 const errorController = require("./controllers/error");
 const body_parser = require("body-parser");
-const db = require("./util/database");
+//MySQL
+// const db = require("./util/database")
+const sequelize = require('./util/database');
 
 app.use(body_parser.urlencoded({extended: false}));
 //templating engine ejs and i think views is the path where it has to search
@@ -29,7 +31,11 @@ app.use(shopRouter); //include '/admin' for that file before the path
 
 app.use(errorController.get404);
 
+sequelize.sync();
+
 app.listen(3000);
+
+
 
 
 
