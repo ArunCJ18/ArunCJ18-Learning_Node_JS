@@ -22,6 +22,7 @@ exports.postAddProduct = (req, res, next) => {
     })
     .then(products =>{
         console.log("Product Created!");
+        res.redirect("/admin/products");
     })
     .catch(err =>{
         console.log(err);
@@ -36,7 +37,7 @@ exports.postAddProduct = (req, res, next) => {
 exports.getEditProduct = (req, res, next) => {
     const editMode = req.query.edit;
     if(!editMode){
-        return res.redirect("/");
+        return res.redirect("/admin/products");
     }
     prodId = req.params.productId;
     Product.findByPk(prodId)
@@ -67,7 +68,7 @@ exports.postEditProducts = (req, res, next) => {
         product.price = updatedPrice;
         product.imageUrl = updatedImageUrl;
         product.description = updatedDescription;
-        return product.save();
+        return product.save()
     })
     .then(result => {
         console.log("Product Sucessfully Edited");
@@ -75,6 +76,7 @@ exports.postEditProducts = (req, res, next) => {
     })
     .catch(err => console.log(err));
 }
+    
 
 exports.getProducts = (req, res, next) => {
     Product.findAll()
@@ -90,6 +92,14 @@ exports.getProducts = (req, res, next) => {
 }
 exports.postDeleteProducts =(req, res, next) => {
     prodId = req.body.productId;
-    Product.delete(prodId);
+    Product.findByPk(prodId)
+    .then(product => {
+    product.destroy()
+    .then(result => {
+    console.log("Deleted Product!");
     res.redirect("/admin/products")
+        });
+    })
+    .catch(err => console.log(err));
+    
 }
