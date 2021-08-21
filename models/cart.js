@@ -1,92 +1,116 @@
-const fs = require('fs');
-const path = require("path");
+const Sequelize = require("sequelize");
 
-//creating a file inside data folder from the rootdirectory
+const sequelize = require("../util/database");
 
-const p = path.join(path.dirname(process.mainModule.filename),
-    "data",
-    "cart.json"
-    );
+const Cart = sequelize.define('cart', {
+    id:{
+        type: Sequelize.INTEGER,
+        autoIncrement: true,
+        allowNull: false,
+        primaryKey: true
+    }
+});
 
-module.exports = class Cart{
-    static addproduct(id, productPrice){
+module.exports = Cart;
 
-        //checking for file in data folder if it exits, copying the contents
-        //if it doesnt initializing the values
 
-        fs.readFile(p, (err , fileContent) =>{
-            let cart = { products: [], totalPrice: 0};
-            if(!err){
-                cart = JSON.parse(fileContent);
-            }
 
-            //finding that is recieved product already exists? using id
-            //getting index of that existing product
 
-            const existingProductIndex = cart.products.findIndex(
-                findByIndex => findByIndex.id === id
-                );
 
-            //by getting index number, store that product array by using indexing
 
-            const existingProduct = cart.products[existingProductIndex];
-            let updatedProduct;
-            if(existingProduct){
 
-                //stored the existing product array in updatedProduct
 
-                updatedProduct = { ...existingProduct };
 
-                //adding qty + 1 to that existing product
 
-                updatedProduct.qty = updatedProduct.qty + 1;
+// const fs = require('fs');
+// const path = require("path");
 
-                //storing cart product to cart product itself
+// //creating a file inside data folder from the rootdirectory
 
-                cart.products = [ ...cart.products ];
+// const p = path.join(path.dirname(process.mainModule.filename),
+//     "data",
+//     "cart.json"
+//     );
 
-                //using indexing replace the existing product with updatedProduct
+// module.exports = class Cart{
+//     static addproduct(id, productPrice){
 
-                cart.products[existingProductIndex] = updatedProduct ;
-            }else{
+//         //checking for file in data folder if it exits, copying the contents
+//         //if it doesnt initializing the values
 
-                //if there is no existing product initializating id and quantity
+//         fs.readFile(p, (err , fileContent) =>{
+//             let cart = { products: [], totalPrice: 0};
+//             if(!err){
+//                 cart = JSON.parse(fileContent);
+//             }
 
-                updatedProduct = { id: id, qty: 1};
+//             //finding that is recieved product already exists? using id
+//             //getting index of that existing product
 
-                //appending cart products and updatedproduct to cart.products
+//             const existingProductIndex = cart.products.findIndex(
+//                 findByIndex => findByIndex.id === id
+//                 );
 
-                cart.products = [ ...cart.products, updatedProduct];
-            }
+//             //by getting index number, store that product array by using indexing
 
-            //if old price exists adding current product price with previous total
+//             const existingProduct = cart.products[existingProductIndex];
+//             let updatedProduct;
+//             if(existingProduct){
 
-            cart.totalPrice = cart.totalPrice+ +productPrice;
+//                 //stored the existing product array in updatedProduct
 
-            //after done everything writing all cart array to cart.json file
+//                 updatedProduct = { ...existingProduct };
 
-            fs.writeFile(p, JSON.stringify(cart), err => {
-                console.log(err);
-            });
+//                 //adding qty + 1 to that existing product
+
+//                 updatedProduct.qty = updatedProduct.qty + 1;
+
+//                 //storing cart product to cart product itself
+
+//                 cart.products = [ ...cart.products ];
+
+//                 //using indexing replace the existing product with updatedProduct
+
+//                 cart.products[existingProductIndex] = updatedProduct ;
+//             }else{
+
+//                 //if there is no existing product initializating id and quantity
+
+//                 updatedProduct = { id: id, qty: 1};
+
+//                 //appending cart products and updatedproduct to cart.products
+
+//                 cart.products = [ ...cart.products, updatedProduct];
+//             }
+
+//             //if old price exists adding current product price with previous total
+
+//             cart.totalPrice = cart.totalPrice+ +productPrice;
+
+//             //after done everything writing all cart array to cart.json file
+
+//             fs.writeFile(p, JSON.stringify(cart), err => {
+//                 console.log(err);
+//             });
             
-        }); 
-    };
+//         }); 
+//     };
 
-    static deleteProduct(id, productPrice){
-        fs.readFile(p, (err,fileContent) => {
-            if(err){
-                return;
-            }
-            const updatedCart = {...JSON.parse(fileContent)};
+//     static deleteProduct(id, productPrice){
+//         fs.readFile(p, (err,fileContent) => {
+//             if(err){
+//                 return;
+//             }
+//             const updatedCart = {...JSON.parse(fileContent)};
             
-            const product = updatedCart.products.find(findId => findId.id === id);
-            const productQty = product.qty;
-            updatedCart.products = updatedCart.products.filter(prodId => prodId.id !== id);
-            updatedCart.totalPrice = updatedCart.totalPrice - productPrice * productQty;
-             fs.writeFile(p, JSON.stringify(updatedCart),err =>{
-                 console.log(err);
-             });
-        });
-    };
-}
+//             const product = updatedCart.products.find(findId => findId.id === id);
+//             const productQty = product.qty;
+//             updatedCart.products = updatedCart.products.filter(prodId => prodId.id !== id);
+//             updatedCart.totalPrice = updatedCart.totalPrice - productPrice * productQty;
+//              fs.writeFile(p, JSON.stringify(updatedCart),err =>{
+//                  console.log(err);
+//              });
+//         });
+//     };
+// }
 
